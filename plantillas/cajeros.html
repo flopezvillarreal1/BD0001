@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Cajeros | Gestión Comercial</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+        body { background-color: #eef2f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; color: #1e293b; }
+        .container { background: #ffffff; border-radius: 10px; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08); width: 100%; max-width: 480px; overflow: hidden; border: 1px solid #e2e8f0; }
+        .header { background-color: #0f172a; color: #ffffff; padding: 22px 30px; }
+        .header h2 { margin: 0; font-size: 20px; font-weight: 600; }
+        .header p { margin: 4px 0 0; font-size: 13px; color: #94a3b8; }
+        .form-body { padding: 28px 30px; }
+        .form-group { margin-bottom: 16px; }
+        label { display: block; font-weight: 600; color: #334155; margin-bottom: 6px; font-size: 13px; }
+        input, select { width: 100%; padding: 11px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; color: #0f172a; background-color: #ffffff; transition: border-color 0.2s, box-shadow 0.2s; }
+        input[type="text"] { text-transform: capitalize; }
+        input:focus, select:focus { border-color: #1e3a8a; box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1); outline: none; }
+        .actions { display: flex; gap: 12px; margin-top: 24px; }
+        button { flex: 2; padding: 12px; background-color: #1e3a8a; border: none; border-radius: 6px; color: #ffffff; font-weight: 600; font-size: 14px; cursor: pointer; transition: background-color 0.2s; }
+        button:hover { background-color: #172554; }
+        .btn-back { flex: 1; padding: 12px; background-color: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; color: #334155; text-align: center; text-decoration: none; font-weight: 600; font-size: 14px; transition: background-color 0.2s; }
+        .btn-back:hover { background-color: #e2e8f0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Personal de Caja</h2>
+            <p>Registrar un nuevo Empleado</p>
+        </div>
+        <div class="form-body">
+            <form method="POST">
+                <div class="form-group">
+                    <label>Nombre Completo </label>
+                    <input type="text" name="nombre_cajero" placeholder="" oninput="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase())" required>
+                </div>
+                <div class="form-group">
+                    <label>Turno Asignado</label>
+                    <select name="turno">
+                        <option value="Matutino">Matutino</option>
+                        <option value="Vespertino">Vespertino</option>
+                        <option value="Nocturno">Nocturno</option>
+                        <option value="Mixto">Mixto</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Cargo</label>
+                    <input type="text" name="cargo" placeholder="" oninput="this.value = this.value.replace(/\b\w/g, l => l.toUpperCase())">
+                </div>
+                <div class="form-group">
+                    <label>Sueldo Mensual (MXN)</label>
+                    <input type="number" step="0.01" name="sueldo" placeholder="0.00" min="0">
+                </div>
+                <div class="actions">
+                    <a href="/" class="btn-back">Cancelar</a>
+                    <button type="submit">Dar de Alta</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

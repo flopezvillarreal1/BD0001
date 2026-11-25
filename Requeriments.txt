@@ -1,0 +1,5 @@
+flask
+pymongo
+reportlab
+num2words
+gunicorn

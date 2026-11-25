@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Tienda</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .menu-card { background: white; padding: 40px 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        h1 { margin-top: 0; color: #2c3e50; font-size: 26px; margin-bottom: 30px; border-bottom: 2px solid #ecf0f1; padding-bottom: 15px; }
+        ul { list-style-type: none; padding: 0; margin: 0; }
+        li { margin-bottom: 15px; }
+        li a { display: block; padding: 14px; background-color: #34495e; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s ease; }
+        li a:hover { background-color: #2c3e50; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+    </style>
+</head>
+<body>
+    <div class="menu-card">
+        <h1>Sistema de Ventas</h1>
+        <ul>
+            <li><a href="/clientes">Registrar Cliente</a></li>
+            <li><a href="/productos">Registrar Producto</a></li>
+            <li><a href="/nota_venta">Generar Nota de Venta</a></li>
+	    <li><a href="/cajeros">Registrar Cajero</a></li>
+        </ul>
+    </div>
+</body>
+</html>
