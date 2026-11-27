@@ -4,23 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Productos | Gestión Comercial</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
-        body { background-color: #eef2f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; color: #1e293b; }
-        .container { background: #ffffff; border-radius: 10px; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08); width: 100%; max-width: 480px; overflow: hidden; border: 1px solid #e2e8f0; }
-        .header { background-color: #0f172a; color: #ffffff; padding: 22px 30px; }
-        .header h2 { margin: 0; font-size: 20px; font-weight: 600; }
-        .header p { margin: 4px 0 0; font-size: 13px; color: #94a3b8; }
+        :root {
+            --bg-body: #09090b;
+            --bg-card: #141418;
+            --bg-input: #0e0e12;
+            --border: #27272f;
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+            --accent: #6366f1;
+            --accent-hover: #4f46e5;
+            --accent-glow: rgba(99, 102, 241, 0.25);
+        }
+        * { box-sizing: border-box; font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif; }
+        body { background-color: var(--bg-body); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; color: var(--text-primary); }
+        .container { background: var(--bg-card); border-radius: 20px; box-shadow: 0 20px 35px -15px rgba(0, 0, 0, 0.8); width: 100%; max-width: 480px; overflow: hidden; border: 1px solid var(--border); }
+        .header { background-color: rgba(9, 9, 11, 0.88); border-bottom: 1px solid var(--border); color: var(--text-primary); padding: 22px 30px; }
+        .header h2 { margin: 0; font-size: 20px; font-weight: 800; }
+        .header p { margin: 4px 0 0; font-size: 13px; color: var(--text-secondary); }
         .form-body { padding: 28px 30px; }
         .form-group { margin-bottom: 16px; }
-        label { display: block; font-weight: 600; color: #334155; margin-bottom: 6px; font-size: 13px; }
-        input { width: 100%; padding: 11px 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; color: #0f172a; transition: border-color 0.2s, box-shadow 0.2s; }
-        input:focus { border-color: #1e3a8a; box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1); outline: none; }
+        label { display: block; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; font-size: 13px; }
+        input { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px; color: var(--text-primary); background-color: var(--bg-input); transition: border-color 0.2s; }
+        input:focus { border-color: var(--accent); outline: none; }
         .actions { display: flex; gap: 12px; margin-top: 24px; }
-        button { flex: 2; padding: 12px; background-color: #1e3a8a; border: none; border-radius: 6px; color: #ffffff; font-weight: 600; font-size: 14px; cursor: pointer; transition: background-color 0.2s; }
-        button:hover { background-color: #172554; }
-        .btn-back { flex: 1; padding: 12px; background-color: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; color: #334155; text-align: center; text-decoration: none; font-weight: 600; font-size: 14px; transition: background-color 0.2s; }
-        .btn-back:hover { background-color: #e2e8f0; }
+        button { flex: 2; padding: 13px; background-color: var(--accent); border: none; border-radius: 12px; color: #ffffff; font-weight: 700; font-size: 14px; cursor: pointer; box-shadow: 0 8px 20px var(--accent-glow); transition: 0.2s; }
+        button:hover { background-color: var(--accent-hover); transform: translateY(-1px); }
+        .btn-back { flex: 1; padding: 13px; background-color: rgba(255, 255, 255, 0.06); border: 1px solid var(--border); border-radius: 12px; color: var(--text-primary); text-align: center; text-decoration: none; font-weight: 600; font-size: 14px; transition: 0.2s; }
+        .btn-back:hover { background-color: rgba(255, 255, 255, 0.1); }
     </style>
 </head>
 <body>
