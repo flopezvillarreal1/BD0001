@@ -13,7 +13,10 @@ def monto_a_letras(cantidad):
     entero = int(cantidad)
     centavos = int(round((cantidad - entero) * 100))
     letras = num2words(entero, lang='es').upper()
-    return f"({letras} PESOS MEXICANOS {centavos:02d}/100 MXN)"
+    if centavos > 0:
+        letras_centavos = num2words(centavos, lang='es').upper()
+        return f"({letras} PESOS CON {letras_centavos} CENTAVOS MXN)"
+    return f"({letras} PESOS MEXICANOS)"
 
 tienda_bp = Blueprint('tienda', __name__, template_folder='plantillas')
 
@@ -23,7 +26,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-MONGO_URI = MONGO_URI = "mongodb+srv://flopezvillarreal1_db_user:palabra2010@dmsa.cqsibku.mongodb.net/?retryWrites=true&w=majority"
+MONGO_URI = "mongodb+srv://flopezvillarreal1_db_user:palabra2010@dmsa.cqsibku.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(MONGO_URI)
 db = client["db_tienda"]
 
@@ -160,112 +163,135 @@ def gestionar_ventas():
         p = canvas.Canvas(buffer)
         ancho_pagina, alto_pagina = 595, 842
 
-        p.setFillColor(colors.HexColor("#0f172a"))
-        p.rect(0, alto_pagina - 85, ancho_pagina, 85, fill=True, stroke=False)
+        p.setFillColor(colors.HexColor("#09090b"))
+        p.rect(0, 0, ancho_pagina, alto_pagina, fill=True, stroke=False)
 
-        p.setFillColor(colors.white)
+        p.setFillColor(colors.HexColor("#141418"))
+        p.setStrokeColor(colors.HexColor("#27272f"))
+        p.roundRect(30, 30, ancho_pagina - 60, alto_pagina - 60, 14, fill=True, stroke=True)
+
+        p.setFillColor(colors.HexColor("#6366f1"))
+        p.rect(30, alto_pagina - 36, ancho_pagina - 60, 6, fill=True, stroke=False)
+
+        p.setFillColor(colors.HexColor("#fafafa"))
         p.setFont("Helvetica-Bold", 18)
-        p.drawString(45, alto_pagina - 42, "COMPROBANTE DE VENTA")
+        p.drawString(50, alto_pagina - 68, "COMPROBANTE DE VENTA")
         
         p.setFont("Helvetica", 10)
-        p.setFillColor(colors.HexColor("#cbd5e1"))
-        p.drawString(45, alto_pagina - 60, "Sistema de Gestión Comercial • Ticket Oficial")
+        p.setFillColor(colors.HexColor("#a1a1aa"))
+        p.drawString(50, alto_pagina - 86, "Sistema de Gestión Comercial • Ticket Oficial")
 
-        p.setFillColor(colors.white)
+        p.setFillColor(colors.HexColor("#a5b4fc"))
         p.setFont("Helvetica-Bold", 10)
-        p.drawRightString(ancho_pagina - 45, alto_pagina - 42, f"FECHA: {fecha}")
+        p.drawRightString(ancho_pagina - 50, alto_pagina - 68, f"FECHA: {fecha}")
 
-        y_info = alto_pagina - 145
-        p.setFillColor(colors.HexColor("#f8fafc"))
-        p.setStrokeColor(colors.HexColor("#cbd5e1"))
-        p.roundRect(45, y_info, ancho_pagina - 90, 45, 6, fill=True, stroke=True)
+        p.setStrokeColor(colors.HexColor("#27272f"))
+        p.line(50, alto_pagina - 102, ancho_pagina - 50, alto_pagina - 102)
 
-        p.setFillColor(colors.HexColor("#334155"))
-        p.setFont("Helvetica-Bold", 10)
-        p.drawString(60, y_info + 27, "CLIENTE:")
+        y_info = alto_pagina - 162
+        p.setFillColor(colors.HexColor("#0e0e12"))
+        p.setStrokeColor(colors.HexColor("#27272f"))
+        p.roundRect(50, y_info, ancho_pagina - 100, 48, 8, fill=True, stroke=True)
+
+        p.setFillColor(colors.HexColor("#a1a1aa"))
+        p.setFont("Helvetica-Bold", 9.5)
+        p.drawString(65, y_info + 29, "CLIENTE:")
+        p.setFillColor(colors.HexColor("#fafafa"))
         p.setFont("Helvetica", 10)
-        p.drawString(115, y_info + 27, nombre_cliente)
+        p.drawString(125, y_info + 29, nombre_cliente)
 
-        p.setFont("Helvetica-Bold", 10)
-        p.drawString(60, y_info + 10, "ATENDIÓ:")
+        p.setFillColor(colors.HexColor("#a1a1aa"))
+        p.setFont("Helvetica-Bold", 9.5)
+        p.drawString(65, y_info + 11, "ATENDIÓ:")
+        p.setFillColor(colors.HexColor("#fafafa"))
         p.setFont("Helvetica", 10)
-        p.drawString(115, y_info + 10, nombre_cajero)
+        p.drawString(125, y_info + 11, nombre_cajero)
 
-        y = y_info - 30
-        p.setFillColor(colors.HexColor("#1e3a8a"))
-        p.rect(45, y - 6, ancho_pagina - 90, 22, fill=True, stroke=False)
+        y = y_info - 32
+        p.setFillColor(colors.HexColor("#6366f1"))
+        p.roundRect(50, y - 6, ancho_pagina - 100, 24, 6, fill=True, stroke=False)
 
-        p.setFillColor(colors.white)
+        p.setFillColor(colors.HexColor("#fafafa"))
         p.setFont("Helvetica-Bold", 9)
-        p.drawString(55, y + 2, "CANT.")
-        p.drawString(105, y + 2, "DESCRIPCIÓN DEL ARTÍCULO")
-        p.drawRightString(440, y + 2, "P. UNITARIO")
-        p.drawRightString(ancho_pagina - 55, y + 2, "TOTAL")
+        p.drawString(62, y + 3, "CANT.")
+        p.drawString(110, y + 3, "DESCRIPCIÓN DEL ARTÍCULO")
+        p.drawRightString(435, y + 3, "P. UNITARIO")
+        p.drawRightString(ancho_pagina - 62, y + 3, "TOTAL")
 
-        y -= 24
+        y -= 26
         p.setFont("Helvetica", 10)
         for idx, prod in enumerate(detalles_ticket):
             if idx % 2 == 1:
-                p.setFillColor(colors.HexColor("#f1f5f9"))
-                p.rect(45, y - 5, ancho_pagina - 90, 18, fill=True, stroke=False)
+                p.setFillColor(colors.HexColor("#0e0e12"))
+                p.rect(50, y - 6, ancho_pagina - 100, 20, fill=True, stroke=False)
 
-            p.setFillColor(colors.HexColor("#0f172a"))
-            p.drawString(60, y, str(prod['cantidad']))
-            p.drawString(105, y, prod['nombre'][:42])
-            p.drawRightString(440, y, f"${prod['precio']:,.2f}")
-            p.drawRightString(ancho_pagina - 55, y, f"${prod['importe']:,.2f}")
-            y -= 20
+            p.setFillColor(colors.HexColor("#fafafa"))
+            p.drawString(66, y, str(prod['cantidad']))
+            p.drawString(110, y, prod['nombre'][:40])
+            p.setFillColor(colors.HexColor("#a1a1aa"))
+            p.drawRightString(435, y, f"${prod['precio']:,.2f}")
+            p.setFillColor(colors.HexColor("#a5b4fc"))
+            p.setFont("Helvetica-Bold", 10)
+            p.drawRightString(ancho_pagina - 62, y, f"${prod['importe']:,.2f}")
+            p.setFont("Helvetica", 10)
+            y -= 22
 
-        p.setStrokeColor(colors.HexColor("#94a3b8"))
-        p.line(45, y + 10, ancho_pagina - 45, y + 10)
-        y -= 15
+        p.setStrokeColor(colors.HexColor("#27272f"))
+        p.line(50, y + 8, ancho_pagina - 50, y + 8)
+        y -= 16
 
-        caja_x = 295
-        caja_ancho = ancho_pagina - 45 - caja_x
+        caja_x = 290
+        caja_ancho = ancho_pagina - 50 - caja_x
         
-        p.setFillColor(colors.HexColor("#f8fafc"))
-        p.setStrokeColor(colors.HexColor("#cbd5e1"))
-        p.roundRect(caja_x, y - 125, caja_ancho, 135, 6, fill=True, stroke=True)
+        p.setFillColor(colors.HexColor("#0e0e12"))
+        p.setStrokeColor(colors.HexColor("#27272f"))
+        p.roundRect(caja_x, y - 128, caja_ancho, 138, 8, fill=True, stroke=True)
 
-        p.setFillColor(colors.HexColor("#475569"))
+        p.setFillColor(colors.HexColor("#6366f1"))
+        p.rect(caja_x, y - 128, 3, 138, fill=True, stroke=False)
+
+        p.setFillColor(colors.HexColor("#a1a1aa"))
         p.setFont("Helvetica", 10)
         p.drawString(caja_x + 15, y - 12, "Subtotal:")
-        p.drawRightString(ancho_pagina - 58, y - 12, f"${subtotal:,.2f}")
+        p.setFillColor(colors.HexColor("#fafafa"))
+        p.drawRightString(ancho_pagina - 62, y - 12, f"${subtotal:,.2f}")
 
+        p.setFillColor(colors.HexColor("#a1a1aa"))
         p.drawString(caja_x + 15, y - 30, f"Bonificación ({porcentaje_bonificacion:g}%):")
-        p.setFillColor(colors.HexColor("#0f766e") if monto_descuento > 0 else colors.HexColor("#475569"))
-        p.drawRightString(ancho_pagina - 58, y - 30, f"-${monto_descuento:,.2f}")
+        p.setFillColor(colors.HexColor("#34d399") if monto_descuento > 0 else colors.HexColor("#a1a1aa"))
+        p.drawRightString(ancho_pagina - 62, y - 30, f"-${monto_descuento:,.2f}")
 
-        p.setStrokeColor(colors.HexColor("#cbd5e1"))
-        p.line(caja_x + 15, y - 40, ancho_pagina - 58, y - 40)
+        p.setStrokeColor(colors.HexColor("#27272f"))
+        p.line(caja_x + 15, y - 41, ancho_pagina - 62, y - 41)
 
-        p.setFillColor(colors.HexColor("#0f172a"))
+        p.setFillColor(colors.HexColor("#fafafa"))
         p.setFont("Helvetica-Bold", 12)
-        p.drawString(caja_x + 15, y - 58, "TOTAL NETO:")
-        p.drawRightString(ancho_pagina - 58, y - 58, f"${total:,.2f}")
+        p.drawString(caja_x + 15, y - 59, "TOTAL NETO:")
+        p.drawRightString(ancho_pagina - 62, y - 59, f"${total:,.2f}")
 
-        p.setFillColor(colors.HexColor("#334155"))
+        p.setFillColor(colors.HexColor("#a1a1aa"))
         p.setFont("Helvetica", 10)
-        p.drawString(caja_x + 15, y - 82, "Efectivo recibido:")
-        p.drawRightString(ancho_pagina - 58, y - 82, f"${billete:,.2f}")
+        p.drawString(caja_x + 15, y - 84, "Efectivo recibido:")
+        p.setFillColor(colors.HexColor("#fafafa"))
+        p.drawRightString(ancho_pagina - 62, y - 84, f"${billete:,.2f}")
 
-        p.setFillColor(colors.HexColor("#1e3a8a"))
+        p.setFillColor(colors.HexColor("#818cf8"))
         p.setFont("Helvetica-Bold", 12)
-        p.drawString(caja_x + 15, y - 108, "CAMBIO:")
-        p.drawRightString(ancho_pagina - 58, y - 108, f"${cambio:,.2f}")
+        p.drawString(caja_x + 15, y - 110, "CAMBIO:")
+        p.drawRightString(ancho_pagina - 62, y - 110, f"${cambio:,.2f}")
 
-        y_letras = y - 150
+        y_letras = y - 155
         p.setFont("Helvetica-Oblique", 8.5)
-        p.setFillColor(colors.HexColor("#475569"))
-        p.drawRightString(ancho_pagina - 45, y_letras, f"Total: {monto_a_letras(total)}")
-        p.drawRightString(ancho_pagina - 45, y_letras - 14, f"Efectivo: {monto_a_letras(billete)}")
-        p.drawRightString(ancho_pagina - 45, y_letras - 28, f"Cambio: {monto_a_letras(cambio)}")
+        p.setFillColor(colors.HexColor("#a1a1aa"))
+        p.drawRightString(ancho_pagina - 50, y_letras, f"Total: {monto_a_letras(total)}")
+        p.drawRightString(ancho_pagina - 50, y_letras - 14, f"Efectivo: {monto_a_letras(billete)}")
+        p.drawRightString(ancho_pagina - 50, y_letras - 28, f"Cambio: {monto_a_letras(cambio)}")
 
-        p.setStrokeColor(colors.HexColor("#e2e8f0"))
-        p.line(45, 65, ancho_pagina - 45, 65)
-        p.setFillColor(colors.HexColor("#64748b"))
+        p.setStrokeColor(colors.HexColor("#27272f"))
+        p.line(50, 75, ancho_pagina - 50, 75)
+        p.setFillColor(colors.HexColor("#a1a1aa"))
         p.setFont("Helvetica", 9)
-        p.drawCentredString(ancho_pagina / 2, 48, "Gracias por su preferencia • Conserve este comprobante para cualquier aclaración.")
+        p.drawCentredString(ancho_pagina / 2, 55, "Gracias por su preferencia • Conserve este comprobante para cualquier aclaración.")
 
         p.save()
         buffer.seek(0)
